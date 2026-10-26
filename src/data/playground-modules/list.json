@@ -1,0 +1,108 @@
+{
+  "id": "list",
+  "version": 1,
+  "status": "active",
+  "category": "read",
+  "order": 10,
+  "tags": ["read-only", "records", "pagination", "beginner"],
+  "method": "GET",
+  "beginnerName": "Show records",
+  "developerName": "List records",
+  "summary": "Return a small page of records from the selected layout or table.",
+  "purpose": "Use this when you want to inspect a table or layout safely before doing anything more advanced.",
+  "difficulty": "beginner",
+  "learningGoals": [
+    "Understand the difference between a Data API layout and an OData table.",
+    "Practice safe read-only pagination with a predictable limit.",
+    "See how the browser asks the protected PHP bridge to run a request."
+  ],
+  "explanation": "This module gives beginners a safe first request. It keeps the browser on the same origin, avoids credentials in generated code, and shows the transport-specific shape for FileMaker reads.",
+  "commonMistakes": [
+    "Using a table name while the Data API is selected.",
+    "Setting an extremely large limit before confirming the request works.",
+    "Assuming browser code should talk directly to FileMaker."
+  ],
+  "expectedResult": "You get starter code that asks for a small page of records using either Data API or OData conventions.",
+  "safety": {
+    "level": "read-only",
+    "sideEffects": false,
+    "runMode": "read-only-live"
+  },
+  "support": {
+    "languages": ["php", "javascript"],
+    "transports": ["data-api", "odata"],
+    "prerequisites": [
+      "Choose a FileMaker layout for Data API or a table for OData.",
+      "Keep the browser request routed through the authenticated PHP bridge."
+    ]
+  },
+  "inputs": [
+    {
+      "id": "resource",
+      "label": "Layout or table",
+      "help": "Use the Data API layout name or the OData table name you want to read from.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Customers",
+      "sample": "Customers"
+    },
+    {
+      "id": "limit",
+      "label": "How many records",
+      "help": "Start small so your first test stays fast and easy to review.",
+      "type": "integer",
+      "required": true,
+      "defaultValue": 10,
+      "sample": 10,
+      "validation": {
+        "min": 1,
+        "max": 1000
+      }
+    }
+  ],
+  "variants": {
+    "php:data-api": {
+      "status": "supported",
+      "template": "// Data API: list {{integer:limit}} records from the {{php:resource}} layout\n$result = $bridge->getRecords([\n    '_limit' => {{integer:limit}},\n    '_offset' => 1,\n]);"
+    },
+    "php:odata": {
+      "status": "supported",
+      "template": "// OData: list {{integer:limit}} records from the {{php:resource}} table\n$result = $bridge->listODataRecords([\n    'table' => '{{php:resource}}',\n    'top' => {{integer:limit}},\n    'count' => true,\n]);"
+    },
+    "javascript:data-api": {
+      "status": "supported",
+      "template": "// Browser-safe read: ask the protected PHP bridge to list records through the Data API.\nconst response = await fetch('/openbridge-api.php', {\n  method: 'POST',\n  credentials: 'include',\n  headers: {\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    action: 'playground',\n    transport: 'data-api',\n    operation: 'list',\n    resource: {{js:resource}},\n    limit: {{integer:limit}},\n  }),\n});\n\nconst result = await response.json();"
+    },
+    "javascript:odata": {
+      "status": "supported",
+      "template": "// Browser-safe read: ask the protected PHP bridge to list records through OData.\nconst response = await fetch('/openbridge-api.php', {\n  method: 'POST',\n  credentials: 'include',\n  headers: {\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    action: 'playground',\n    transport: 'odata',\n    operation: 'list',\n    resource: {{js:resource}},\n    table: {{js:resource}},\n    limit: {{integer:limit}},\n  }),\n});\n\nconst result = await response.json();"
+    }
+  },
+  "comments": {
+    "beginner": [
+      "List records is the safest first step because it reads without changing data.",
+      "The browser code talks only to the same-origin PHP bridge, not directly to FileMaker.",
+      "OData uses tables while the Data API uses layouts, so the label matters."
+    ],
+    "advanced": [
+      "Use small limits first so fixture output and live smoke tests stay predictable.",
+      "The JavaScript variant mirrors the protected playground endpoint contract already used by the app.",
+      "The PHP template intentionally preserves the legacy starter output exactly."
+    ]
+  },
+  "tests": {
+    "fixtureId": "playground.list.v1",
+    "expectedPlaceholders": [
+      "{{php:resource}}",
+      "{{integer:limit}}",
+      "{{js:resource}}"
+    ],
+    "safeOperation": "list"
+  },
+  "links": [
+    "OPENBRIDGE-AI-GUIDE.md",
+    "docs/api-reference.md",
+    "docs/using-openbridge-libraries.md"
+  ],
+  "compatibilityAliases": ["show-records", "list-records"]
+}

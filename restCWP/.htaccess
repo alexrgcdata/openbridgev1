@@ -1,0 +1,7 @@
+# Defense in depth for Apache deployments. PHP config is required by
+# openbridge-api.php but must never be requested directly from the web.
+<FilesMatch "^(openbridge\.config|config)\.php$">
+  Require all denied
+</FilesMatch>
+
+Options -Indexes

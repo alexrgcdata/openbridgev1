@@ -1,0 +1,62 @@
+.docs-book{margin-top:22px;border:1px solid var(--line);border-radius:9px;background:#111b2b;color:#e8effa;overflow:hidden;min-width:0}
+.docs-book-header{padding:30px 32px 26px;border-bottom:1px solid var(--line);background:linear-gradient(110deg,#1c2e47,#192238 70%,#30273b)}
+.docs-book-header>span{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:#e8c983}
+.docs-book-header h2{margin:10px 0 8px;font-size:clamp(24px,3vw,34px);letter-spacing:-.04em}
+.docs-book-header p{margin:0;font-size:14px;line-height:1.6;color:#b1c0d6}
+.docs-book-tabs{display:flex;gap:4px;padding:12px 20px 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:thin}
+.docs-book-tabs button{flex:none;min-height:46px;padding:12px 16px;border:1px solid transparent;border-bottom:3px solid transparent;border-radius:6px 6px 0 0;background:transparent;color:#b5c3d8;font-weight:750;font-size:14px;white-space:nowrap}
+.docs-book-tabs button:hover{background:#ffffff08;color:#fff}
+.docs-book-tabs button[aria-selected=true]{color:#ffe09b;border-color:#ffffff12;border-bottom-color:#e8bd63;background:#ffffff06}
+.docs-book-layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:30px;padding:32px;align-items:start}
+.docs-contents{position:sticky;top:100px;padding-right:20px;border-right:1px solid var(--line)}
+.docs-contents>strong{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8196b6}
+.docs-contents nav{display:grid;gap:3px;margin-top:13px}
+.docs-contents button{padding:9px 0;border:0;background:transparent;color:#aebed4;text-align:left;font-size:12px;line-height:1.55}
+.docs-contents button:hover{color:#ffe09b}
+.docs-article{min-width:0;max-width:880px}
+.docs-article h3{margin:0 0 12px;font-size:25px;letter-spacing:-.03em;line-height:1.35}
+.docs-article .docs-lead{font-size:16px;color:#b6c7dc;margin-bottom:28px}
+.docs-article section{margin-top:28px;padding-top:25px;border-top:1px solid var(--line);scroll-margin-top:100px}
+.docs-article h4{margin:0 0 14px;font-size:18px;color:#f2f6ff;line-height:1.4}
+.docs-article p,.docs-article li,.docs-article dd{font-size:14px;line-height:1.85;color:#b4c3d8}
+.docs-article p{margin:12px 0}
+.docs-article strong{color:#e4ecf8}
+.docs-article ol,.docs-article ul{padding-left:22px}
+.docs-article li+li{margin-top:9px}
+.docs-article :not(pre)>code{font-size:.9em;color:#e8d29f;overflow-wrap:anywhere}
+.docs-flow{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:22px 0;padding:16px 0;border-block:1px solid var(--line);color:#c6d8ee;font-size:13px;font-weight:700}
+.docs-flow b{color:#e8bd63}
+.docs-code{margin:20px 0;max-width:100%;border:1px solid #ffffff1a;border-radius:6px;overflow:hidden;background:#0a1321}
+.docs-code figcaption{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #ffffff12;color:#96abc9;font-size:11px;font-weight:700}
+.docs-code figcaption>span:first-child{margin-right:auto;text-transform:uppercase;letter-spacing:.04em}
+.docs-code button{padding:6px 10px;border:1px solid #ffffff25;border-radius:4px;background:#1b2b41;color:#e6edf7;font-size:12px;white-space:nowrap}
+.docs-code figcaption>span[role=status]:empty{display:none}
+.docs-code pre{margin:0;padding:18px;overflow:auto;tab-size:4;color:#bce2dc;font:12px/1.85 'DM Mono',monospace;white-space:pre}
+.docs-table-wrap{overflow:auto;max-width:100%}
+.docs-article table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}
+.docs-article th,.docs-article td{padding:13px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+.docs-article th{background:#18263a;color:#e8effa;font-weight:750}
+.docs-article td{color:#b4c3d8}
+.docs-article td:first-child{width:36%}
+.docs-definitions{margin:0}
+.docs-definitions dt{margin-top:20px;font-size:14px;font-weight:750;color:#f0d69d}
+.docs-definitions dd{margin:5px 0 0}
+.content>.topbar{flex-wrap:wrap}
+.content>.topbar .topbar-links{gap:8px;overflow-x:auto;order:10;flex-basis:100%;padding-top:4px}
+.quick-actions-label{flex:none;color:#62748e;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.content>.topbar .topbar-links button:nth-child(n){display:block;flex:none;min-height:44px;padding:11px 15px;border:1px solid #bcc7d8;border-radius:6px;background:#e8edf5;color:#263b58;font-size:14px;font-weight:800}
+.content>.topbar .topbar-links button:hover{background:#dbe5f3;border-color:#899bb5}
+.content>.topbar .topbar-links button.active{border-color:#9d83c4;background:#e7def7;color:#533587}
+.content>.topbar .topbar-links button+button:before{display:none}
+.theme-light .docs-book{background:#fff;color:#1d2b42}
+.theme-light .docs-article p,.theme-light .docs-article li,.theme-light .docs-article dd,.theme-light .docs-article td,.theme-light .docs-contents button{color:#52647c}
+.theme-light .docs-article h3,.theme-light .docs-article h4,.theme-light .docs-article strong{color:#243650}
+.theme-light .docs-article .docs-lead{color:#52647c}
+.theme-light .docs-book-tabs button{color:#425671}
+.theme-light .docs-book-tabs button[aria-selected=true]{color:#704c11;background:#fcf8ef}
+.theme-light .docs-article :not(pre)>code,.theme-light .docs-definitions dt{color:#76541f}
+.theme-light .docs-flow{color:#425671}
+.app-dialog-body .docs-book{margin-top:0}
+.app-dialog-body .docs-contents{position:static}
+@media(max-width:1100px){.docs-book-layout{grid-template-columns:minmax(0,1fr);gap:24px}.docs-contents{position:static;border-right:0;border-bottom:1px solid var(--line);padding:0 0 16px}.docs-contents nav{display:flex;flex-wrap:wrap;gap:4px 20px}.content>.topbar{flex-wrap:wrap}.content>.topbar .topbar-links{display:flex;order:10;flex-basis:100%;padding-top:5px}.content>.topbar .topbar-links button{padding:9px 12px;font-size:13px}.quick-actions-label{display:none}.docs-article section{scroll-margin-top:160px}}
+@media(max-width:640px){.docs-book-header{padding:24px 18px}.docs-book-tabs{padding:8px 10px 0}.docs-book-tabs button{font-size:13px;padding:12px}.docs-book-layout{padding:22px 18px}.docs-article h3{font-size:22px}.docs-code pre{padding:14px;font-size:11px}.docs-code figcaption{flex-wrap:wrap}.docs-article td,.docs-article th{padding:10px 8px}.docs-flow{gap:8px;font-size:12px}}

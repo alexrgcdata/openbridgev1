@@ -1,0 +1,6 @@
+item_id,sku,item_name,category,description,quantity_on_hand,reorder_level,unit_cost,currency,location,status
+I-2001,OB-CBL-001,USB-C Braided Cable,Accessories,Two-meter braided USB-C charging and data cable,42,10,18.50,USD,Main Stockroom,In Stock
+I-2002,OB-HUB-002,8-Port USB-C Hub,Accessories,Aluminum hub with HDMI Ethernet and USB expansion,18,5,64.00,USD,Main Stockroom,In Stock
+I-2003,OB-SCN-003,Compact Barcode Scanner,Equipment,Wireless handheld scanner for inventory receiving,7,2,129.00,USD,Main Stockroom,In Stock
+I-2004,OB-LBL-004,Thermal Label Roll,Consumables,Direct-thermal labels compatible with the demo printer,96,24,12.75,USD,Supply Cabinet,In Stock
+I-2005,OB-TAB-005,Rugged Demo Tablet,Equipment,Protected tablet for warehouse counts and field updates,3,2,389.00,USD,Equipment Locker,Low Stock

@@ -1,0 +1,104 @@
+{
+  "id": "script",
+  "version": 1,
+  "status": "active",
+  "category": "scripts",
+  "order": 70,
+  "tags": ["script", "server-side", "automation", "review-required"],
+  "method": "POST",
+  "beginnerName": "Run a FileMaker script",
+  "developerName": "Run FileMaker script",
+  "summary": "Run a server-side FileMaker script with a JSON parameter.",
+  "purpose": "Use this when you want a reviewed server-side script example and need the generated parameter format spelled out clearly.",
+  "difficulty": "advanced",
+  "learningGoals": [
+    "Understand that FileMaker scripts are server-side operations with side effects outside simple CRUD.",
+    "See the existing Data API script helper output preserved exactly.",
+    "Make transport limitations explicit instead of implying OData parity."
+  ],
+  "explanation": "Scripts can do far more than read or write one field, so this module stays code-only. It teaches the safe parameter shape while making clear that script execution belongs in reviewed server-side flows.",
+  "commonMistakes": [
+    "Assuming a script is harmless because the request payload looks small.",
+    "Expecting an OData transport to provide the same script path as the Data API helper.",
+    "Passing real customer data into learning examples."
+  ],
+  "expectedResult": "You get a reviewed script starter snippet, but the playground will not run it live.",
+  "safety": {
+    "level": "restricted",
+    "sideEffects": true,
+    "runMode": "code-only",
+    "confirmationText": "Scripts may have broad side effects. Review the script name, parameter, and environment before running this code."
+  },
+  "support": {
+    "languages": ["php"],
+    "transports": ["data-api"],
+    "prerequisites": [
+      "Know exactly what the target FileMaker script does in the current environment.",
+      "Use scrubbed demo parameters instead of real customer data."
+    ]
+  },
+  "inputs": [
+    {
+      "id": "scriptName",
+      "label": "Script name",
+      "help": "Use the exact FileMaker script name you want to run.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "OpenBridge Demo",
+      "sample": "OpenBridge Demo"
+    },
+    {
+      "id": "value",
+      "label": "Script value",
+      "help": "This becomes the value inside the starter JSON parameter object.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Active",
+      "sample": "Active"
+    }
+  ],
+  "variants": {
+    "php:data-api": {
+      "status": "supported",
+      "template": "// Data API: run a FileMaker script\n$result = $bridge->runScript(\n    '{{php:scriptName}}',\n    ['source' => 'OpenBridge', 'value' => '{{php:value}}']\n);"
+    },
+    "php:odata": {
+      "status": "unsupported",
+      "reason": "This version preserves the original Playground guidance and does not claim an OData script block.",
+      "example": "// FileMaker scripts use the Data API route.\n// Switch to Data API to generate an executable script example."
+    },
+    "javascript:data-api": {
+      "status": "unsupported",
+      "reason": "Browser playground testing is intentionally read-only. FileMaker scripts must stay in reviewed server-side code."
+    },
+    "javascript:odata": {
+      "status": "unsupported",
+      "reason": "FileMaker scripts are not offered as a browser OData playground action. Switch to the PHP Data API variant for a reviewed server-side example."
+    }
+  },
+  "comments": {
+    "beginner": [
+      "Scripts can do many things at once, so this module generates code only.",
+      "Use a scrubbed demo parameter while learning.",
+      "If you need a runnable example, switch to the PHP Data API variant and review it on the server."
+    ],
+    "advanced": [
+      "The OData PHP branch intentionally stays comment-only to preserve the old generator behavior and avoid false parity.",
+      "Restricted safety is appropriate because scripts may create, edit, delete, or trigger secondary workflows.",
+      "No browser variant is supported because the learning surface stays read-only by design."
+    ]
+  },
+  "tests": {
+    "fixtureId": "playground.script.v1",
+    "expectedPlaceholders": [
+      "{{php:scriptName}}",
+      "{{php:value}}"
+    ]
+  },
+  "links": [
+    "OPENBRIDGE-AI-GUIDE.md",
+    "docs/api-reference.md",
+    "docs/security.md"
+  ],
+  "compatibilityAliases": ["run-script", "filemaker-script"]
+}

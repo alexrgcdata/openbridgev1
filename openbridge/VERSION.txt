@@ -1,0 +1,2 @@
+OpenBridge 1.2.0
+Build target: relocatable FTP package

@@ -1,0 +1,6 @@
+person_id,first_name,last_name,email,phone,company,job_title,city,state,country,status
+P-1001,Maya,Chen,maya.chen@example.test,+1-415-555-0138,Northstar Studio,Operations Manager,Oakland,CA,USA,Active
+P-1002,Julian,Reed,julian.reed@example.test,+1-312-555-0174,Harbor & Pine,Inventory Coordinator,Chicago,IL,USA,Active
+P-1003,Elena,Martinez,elena.martinez@example.test,+1-512-555-0192,Blue Mesa Works,Client Success Lead,Austin,TX,USA,Active
+P-1004,Thomas,Okafor,thomas.okafor@example.test,+1-206-555-0146,Evergreen Systems,Technical Buyer,Seattle,WA,USA,Active
+P-1005,Sophie,Laurent,sophie.laurent@example.test,+1-617-555-0163,Beacon Field Co.,Finance Administrator,Boston,MA,USA,Active

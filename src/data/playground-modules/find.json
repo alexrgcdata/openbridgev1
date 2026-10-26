@@ -1,0 +1,134 @@
+{
+  "id": "find",
+  "version": 1,
+  "status": "active",
+  "category": "find",
+  "order": 30,
+  "tags": ["read-only", "search", "filter", "beginner"],
+  "method": "POST",
+  "beginnerName": "Search records",
+  "developerName": "Find records",
+  "summary": "Search a field for a value using the active FileMaker transport.",
+  "purpose": "Use this when you want a plain-English search example that stays read-only.",
+  "difficulty": "beginner",
+  "learningGoals": [
+    "See how Data API finds use a query array while OData finds use a filter expression.",
+    "Practice carrying a field name and value through both transports honestly.",
+    "Learn a safe browser request shape for transport-specific searches."
+  ],
+  "explanation": "Find is the first place the two FileMaker transports become meaningfully different. This module keeps both variants explicit so beginners do not assume the same payload works everywhere.",
+  "commonMistakes": [
+    "Typing the field label instead of the real FileMaker field name.",
+    "Expecting a Data API query array to work in OData.",
+    "Forgetting that OData string values need quote escaping."
+  ],
+  "expectedResult": "You get starter code that searches one field in a transport-correct way without changing data.",
+  "safety": {
+    "level": "read-only",
+    "sideEffects": false,
+    "runMode": "read-only-live"
+  },
+  "support": {
+    "languages": ["php", "javascript"],
+    "transports": ["data-api", "odata"],
+    "prerequisites": [
+      "Know the exact FileMaker field name you want to search.",
+      "Keep search requests routed through the authenticated PHP bridge."
+    ]
+  },
+  "inputs": [
+    {
+      "id": "resource",
+      "label": "Layout or table",
+      "help": "Use the layout name for Data API or the table name for OData.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Customers",
+      "sample": "Customers"
+    },
+    {
+      "id": "field",
+      "label": "Field name",
+      "help": "Use the exact FileMaker field name, including capitalization and spacing if your schema uses them.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Status",
+      "sample": "Status"
+    },
+    {
+      "id": "value",
+      "label": "Value to match",
+      "help": "Use the value you want the field to match.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Active",
+      "sample": "Active"
+    },
+    {
+      "id": "limit",
+      "label": "How many matches",
+      "help": "Keep the first search small so your test stays fast and readable.",
+      "type": "integer",
+      "required": true,
+      "defaultValue": 10,
+      "sample": 10,
+      "validation": {
+        "min": 1,
+        "max": 1000
+      }
+    }
+  ],
+  "variants": {
+    "php:data-api": {
+      "status": "supported",
+      "template": "// Data API: find records where {{php:field}} matches {{php:value}}\n$result = $bridge->findRecords([\n    'query' => [[\n        '{{php:field}}' => '{{php:value}}',\n    ]],\n    'limit' => {{integer:limit}},\n]);"
+    },
+    "php:odata": {
+      "status": "supported",
+      "template": "// OData: filter {{php:resource}} by {{php:field}}\n$result = $bridge->findODataRecords(\n    \"{{odataFieldPhpDouble:field}} eq '{{odataPhpDouble:value}}'\",\n    ['table' => '{{php:resource}}', 'top' => {{integer:limit}}]\n);"
+    },
+    "javascript:data-api": {
+      "status": "supported",
+      "template": "// Browser-safe read: ask the protected PHP bridge to run a Data API find.\nconst response = await fetch('/openbridge-api.php', {\n  method: 'POST',\n  credentials: 'include',\n  headers: {\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    action: 'playground',\n    transport: 'data-api',\n    operation: 'find',\n    resource: {{js:resource}},\n    limit: {{integer:limit}},\n    query: [\n      {\n        [{{js:field}}]: {{js:value}},\n      },\n    ],\n  }),\n});\n\nconst result = await response.json();"
+    },
+    "javascript:odata": {
+      "status": "supported",
+      "template": "// Browser-safe read: ask the protected PHP bridge to run an OData filter.\nconst response = await fetch('/openbridge-api.php', {\n  method: 'POST',\n  credentials: 'include',\n  headers: {\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    action: 'playground',\n    transport: 'odata',\n    operation: 'find',\n    resource: {{js:resource}},\n    table: {{js:resource}},\n    limit: {{integer:limit}},\n    filter: String({{odataFieldJs:field}}) + \" eq '\" + {{odataJs:value}} + \"'\",\n  }),\n});\n\nconst result = await response.json();"
+    }
+  },
+  "comments": {
+    "beginner": [
+      "Find is still safe because it only reads matching records.",
+      "Data API searches use a query array, but OData searches use a filter expression.",
+      "Keep the real FileMaker field name exactly as your schema defines it."
+    ],
+    "advanced": [
+      "The OData PHP variant uses separate placeholder escaping for the field token and the quoted value.",
+      "The JavaScript OData variant serializes the value with OData-safe quote doubling before sending it to PHP.",
+      "This module preserves the old PHP generator output exactly while making the transport split explicit."
+    ]
+  },
+  "tests": {
+    "fixtureId": "playground.find.v1",
+    "expectedPlaceholders": [
+      "{{php:resource}}",
+      "{{php:field}}",
+      "{{php:value}}",
+      "{{odataFieldPhpDouble:field}}",
+      "{{odataPhpDouble:value}}",
+      "{{integer:limit}}",
+      "{{js:resource}}",
+      "{{js:field}}",
+      "{{odataFieldJs:field}}",
+      "{{js:value}}",
+      "{{odataJs:value}}"
+    ],
+    "safeOperation": "find"
+  },
+  "links": [
+    "OPENBRIDGE-AI-GUIDE.md",
+    "docs/api-reference.md",
+    "docs/security.md"
+  ],
+  "compatibilityAliases": ["search-records", "find-records"]
+}

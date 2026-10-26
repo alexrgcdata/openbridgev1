@@ -1,0 +1,123 @@
+{
+  "id": "edit",
+  "version": 1,
+  "status": "active",
+  "category": "write",
+  "order": 50,
+  "tags": ["write", "update", "mutation", "review-required"],
+  "method": "PATCH",
+  "beginnerName": "Change a record",
+  "developerName": "Edit record",
+  "summary": "Update one field on an existing record.",
+  "purpose": "Use this when you need a reviewed server-side starter for changing one field on one record.",
+  "difficulty": "intermediate",
+  "learningGoals": [
+    "Understand that update operations are side-effecting and must stay code-only in the playground.",
+    "Compare the direct Data API helper with the OData payload pattern.",
+    "Practice reviewing both the target record and the target field before execution."
+  ],
+  "explanation": "Edit is intentionally not runnable from the beginner testing surface. It still teaches the request shape so users can move into controlled server-side work safely.",
+  "commonMistakes": [
+    "Updating the wrong record because the record ID or key was copied incorrectly.",
+    "Assuming the same payload can be posted from the browser safely.",
+    "Changing field names instead of preserving the real FileMaker schema."
+  ],
+  "expectedResult": "You get server-side starter code for an update request that is ready for review but not auto-execution.",
+  "safety": {
+    "level": "side-effect",
+    "sideEffects": true,
+    "runMode": "code-only",
+    "confirmationText": "Updating records changes data. Review the identifier, field name, and environment before running this code."
+  },
+  "support": {
+    "languages": ["php"],
+    "transports": ["data-api", "odata"],
+    "prerequisites": [
+      "Confirm the record identifier in a disposable environment first.",
+      "Review the exact FileMaker field name before running the update."
+    ]
+  },
+  "inputs": [
+    {
+      "id": "resource",
+      "label": "Layout or table",
+      "help": "Needed for the OData variant and useful context for reviewers.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Customers",
+      "sample": "Customers"
+    },
+    {
+      "id": "recordId",
+      "label": "Record ID or key",
+      "help": "For Data API this is typically the FileMaker record ID. For OData it is the table key or ROWID.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "1",
+      "sample": "1"
+    },
+    {
+      "id": "field",
+      "label": "Field name",
+      "help": "Use the exact FileMaker field name to update.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Status",
+      "sample": "Status"
+    },
+    {
+      "id": "value",
+      "label": "New value",
+      "help": "Use the value you want written into the target field.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Active",
+      "sample": "Active"
+    }
+  ],
+  "variants": {
+    "php:data-api": {
+      "status": "supported",
+      "template": "// Data API: update record {{php:recordId}}\n$result = $bridge->editRecord('{{php:recordId}}', [\n    '{{php:field}}' => '{{php:value}}',\n]);"
+    },
+    "php:odata": {
+      "status": "supported",
+      "template": "// OData: update entity {{php:recordId}} in {{php:resource}}\n// Send this payload with PATCH through your protected OData route.\n$payload = [\n    '{{php:field}}' => '{{php:value}}',\n];"
+    },
+    "javascript:data-api": {
+      "status": "unsupported",
+      "reason": "Browser playground testing is intentionally read-only. Generate the PHP version and review it server-side before updating records."
+    },
+    "javascript:odata": {
+      "status": "unsupported",
+      "reason": "Browser playground testing is intentionally read-only. Generate the PHP version and review the protected OData route before updating records."
+    }
+  },
+  "comments": {
+    "beginner": [
+      "Edit changes existing data, so this module only generates code for review.",
+      "Double-check the record ID or key before you run anything server-side.",
+      "Keep the FileMaker field name exactly as it exists in the schema."
+    ],
+    "advanced": [
+      "The OData starter remains payload-only to preserve the legacy generator behavior.",
+      "Unsafe JavaScript combinations are explicit so the UI can teach rather than imply support.",
+      "This module is suitable for fixture validation but not for live browser execution."
+    ]
+  },
+  "tests": {
+    "fixtureId": "playground.edit.v1",
+    "expectedPlaceholders": [
+      "{{php:resource}}",
+      "{{php:recordId}}",
+      "{{php:field}}",
+      "{{php:value}}"
+    ]
+  },
+  "links": [
+    "OPENBRIDGE-AI-GUIDE.md",
+    "docs/api-reference.md",
+    "docs/security.md"
+  ],
+  "compatibilityAliases": ["change-record", "edit-record"]
+}

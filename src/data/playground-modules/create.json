@@ -1,0 +1,113 @@
+{
+  "id": "create",
+  "version": 1,
+  "status": "active",
+  "category": "write",
+  "order": 40,
+  "tags": ["write", "create", "mutation", "review-required"],
+  "method": "POST",
+  "beginnerName": "Add a record",
+  "developerName": "Create record",
+  "summary": "Create a record with one starter field. Add more fields to the generated array.",
+  "purpose": "Use this when you want a reviewed code sample for creating one record on the server side.",
+  "difficulty": "intermediate",
+  "learningGoals": [
+    "Understand that create operations have side effects and should not auto-run from a beginner surface.",
+    "See the different server-side shapes for Data API and OData creation flows.",
+    "Start from one field and expand the payload carefully."
+  ],
+  "explanation": "Create is intentionally code-only. It teaches the payload shape without letting a browser learning surface mutate live data.",
+  "commonMistakes": [
+    "Running create logic against production data without a disposable test environment.",
+    "Forgetting that OData write flows need a protected route on the server.",
+    "Changing FileMaker field names to friendlier labels inside the payload."
+  ],
+  "expectedResult": "You get server-side starter code for a create operation, but nothing auto-runs from the playground.",
+  "safety": {
+    "level": "side-effect",
+    "sideEffects": true,
+    "runMode": "code-only",
+    "confirmationText": "Creating records changes data. Review the payload and test only in a disposable environment."
+  },
+  "support": {
+    "languages": ["php"],
+    "transports": ["data-api", "odata"],
+    "prerequisites": [
+      "Use a disposable FileMaker environment before running create code.",
+      "Review every field name and value with the real schema owner."
+    ]
+  },
+  "inputs": [
+    {
+      "id": "resource",
+      "label": "Layout or table",
+      "help": "Needed for the OData variant and useful context for review.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Customers",
+      "sample": "Customers"
+    },
+    {
+      "id": "field",
+      "label": "Field name",
+      "help": "Use the exact FileMaker field name you want to set.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Status",
+      "sample": "Status"
+    },
+    {
+      "id": "value",
+      "label": "Field value",
+      "help": "Use the value that should be written into the new record.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Active",
+      "sample": "Active"
+    }
+  ],
+  "variants": {
+    "php:data-api": {
+      "status": "supported",
+      "template": "// Data API: create a record\n$result = $bridge->createRecord([\n    '{{php:field}}' => '{{php:value}}',\n]);"
+    },
+    "php:odata": {
+      "status": "supported",
+      "template": "// OData: create an entity in {{php:resource}}\n// Send this payload through your protected OData route.\n$payload = [\n    '{{php:field}}' => '{{php:value}}',\n];"
+    },
+    "javascript:data-api": {
+      "status": "unsupported",
+      "reason": "Browser playground testing is intentionally read-only. Generate the PHP version and review it server-side before creating records."
+    },
+    "javascript:odata": {
+      "status": "unsupported",
+      "reason": "Browser playground testing is intentionally read-only. Generate the PHP version and review the protected OData route before creating records."
+    }
+  },
+  "comments": {
+    "beginner": [
+      "Create changes live data, so this module only generates code for review.",
+      "Start with one field, then expand carefully after you confirm the schema.",
+      "Do not run create code from a browser playground against real customer data."
+    ],
+    "advanced": [
+      "The PHP variants preserve the original playground output, including the OData payload-only starter.",
+      "Support metadata keeps JavaScript out of write paths even though explicit unsupported variants still exist.",
+      "Field names stay untouched so generated code maps cleanly to FileMaker."
+    ]
+  },
+  "tests": {
+    "fixtureId": "playground.create.v1",
+    "expectedPlaceholders": [
+      "{{php:resource}}",
+      "{{php:field}}",
+      "{{php:value}}"
+    ]
+  },
+  "links": [
+    "OPENBRIDGE-AI-GUIDE.md",
+    "docs/api-reference.md",
+    "docs/security.md"
+  ],
+  "compatibilityAliases": ["add-record", "create-record"]
+}

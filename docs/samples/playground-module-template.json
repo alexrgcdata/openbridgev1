@@ -1,0 +1,51 @@
+{
+  "id": "my-read-module",
+  "version": 1,
+  "status": "draft",
+  "category": "read",
+  "order": 900,
+  "tags": ["custom", "beginner"],
+  "method": "GET",
+  "beginnerName": "My read block",
+  "developerName": "Custom read-only module",
+  "summary": "Describe the safe read in one sentence.",
+  "purpose": "Explain when someone should use this block.",
+  "difficulty": "beginner",
+  "learningGoals": ["Learn one focused FileMaker request."],
+  "explanation": "Explain what happens in calm, plain language.",
+  "commonMistakes": ["Using a table name where a layout name is required."],
+  "expectedResult": "Describe the response a beginner should expect.",
+  "safety": { "level": "read-only", "sideEffects": false, "runMode": "read-only-live" },
+  "support": {
+    "languages": ["php"],
+    "transports": ["data-api"],
+    "prerequisites": ["A configured protected PHP bridge."]
+  },
+  "inputs": [
+    {
+      "id": "resource",
+      "label": "Layout",
+      "help": "Use the exact FileMaker layout name.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Customers",
+      "sample": "Customers"
+    }
+  ],
+  "variants": {
+    "php:data-api": { "status": "supported", "template": "// Read from the {{php:resource}} layout." },
+    "php:odata": { "status": "unsupported", "reason": "Add a real OData implementation before enabling this variant." },
+    "javascript:data-api": { "status": "unsupported", "reason": "Add a protected browser implementation before enabling this variant." },
+    "javascript:odata": { "status": "unsupported", "reason": "Add and test JavaScript plus OData support before enabling this variant." }
+  },
+  "comments": {
+    "beginner": ["Explain the next step without API jargon."],
+    "advanced": ["Document transport-specific limitations here."]
+  },
+  "tests": {
+    "fixtureId": "playground.my-read-module.v1",
+    "expectedPlaceholders": ["{{php:resource}}"],
+    "safeOperation": "list"
+  },
+  "links": ["docs/coding-playground-module-authoring.md"]
+}

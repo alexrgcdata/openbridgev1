@@ -1,0 +1,62 @@
+/* OpenBridge action palette: named, reusable, and intentionally separate from navigation. */
+:root {
+  --button-focus-ring: #fff0a5;
+}
+
+.button-variant {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid transparent;
+  box-shadow: 0 9px 24px #0000002e, inset 0 1px 0 #ffffff3d;
+}
+
+.button-variant::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(112deg, transparent 35%, #ffffff38 49%, transparent 63%);
+  transform: translateX(-115%);
+  transition: transform .5s ease;
+}
+
+.button-variant:hover,
+.button-variant:focus-visible {
+  filter: none;
+  transform: none;
+  box-shadow: 0 0 0 1px #ffffff18, 0 12px 30px #0000003d, inset 0 1px 0 #ffffff55;
+}
+
+.button-variant:hover::after,
+.button-variant:focus-visible::after { transform: translateX(115%); }
+.button-variant:active { transform: scale(.985); }
+.button-variant:focus-visible { outline: 2px solid var(--button-focus-ring); outline-offset: 3px; }
+
+/* Primary named options */
+.button-gold { color: #281a05; border-color: #ffe9a166; background: linear-gradient(135deg, #fff2b8, #ffd05d 49%, #e79a22); }
+.button-maroon { color: #fff4ef; border-color: #ffb6aa54; background: linear-gradient(135deg, #7b263c, #51192d 52%, #2d1325); }
+.button-action { color: #071d19; border-color: #baffbf6e; background: linear-gradient(135deg, #d8ff9d, #70e6b0 52%, #39bdad); }
+.button-focus { color: #fff8ff; border-color: #e9c4ff70; background: linear-gradient(135deg, #a66ae3, #7046b4 52%, #3f2b73); }
+.button-split { position: relative; color: #08131c; border-color: #d7f9bb99; background: #7449b5; }
+.button-split::before { content: ""; position: absolute; inset: 0 50% 0 0; z-index: -1; background: var(--lime); }
+.button-split:hover { border-color: #f0d7ff; }
+
+/* Extra swatches for future actions—apply one class beside button-variant. */
+.button-cobalt { color: #edf5ff; border-color: #a7d1ff66; background: linear-gradient(135deg, #356fb8, #23538f 52%, #173869); }
+.button-cyan { color: #06232a; border-color: #a5f7ff6b; background: linear-gradient(135deg, #a4fbef, #54dcd9 52%, #27a5bb); }
+.button-violet { color: #fcf7ff; border-color: #dfbeff65; background: linear-gradient(135deg, #9b6be1, #6c49ab 52%, #402f75); }
+.button-ember { color: #301506; border-color: #ffd0a16b; background: linear-gradient(135deg, #ffd099, #f7974f 52%, #d95b2c); }
+.button-rose { color: #fff4fb; border-color: #ffc2dc61; background: linear-gradient(135deg, #bd4f80, #82365f 52%, #4c2142); }
+.button-slate { color: #e9f0ff; border-color: #c2d6ff4d; background: linear-gradient(135deg, #4a638a, #344c71 52%, #24354f); }
+
+.quick-path .button-variant {
+  min-height: 98px;
+  border-radius: 15px;
+  align-content: center;
+}
+.quick-path .button-variant span { color: inherit; background: #ffffff2e; box-shadow: inset 0 1px 0 #ffffff4f; }
+.quick-path .button-variant small { color: currentColor; opacity: .78; }
+@media (prefers-reduced-motion: reduce) {
+  .button-variant, .button-variant::after { transition: none !important; }
+}

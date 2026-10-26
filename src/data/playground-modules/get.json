@@ -1,0 +1,105 @@
+{
+  "id": "get",
+  "version": 1,
+  "status": "active",
+  "category": "read",
+  "order": 20,
+  "tags": ["read-only", "record", "lookup", "beginner"],
+  "method": "GET",
+  "beginnerName": "Get one record",
+  "developerName": "Get record by ID",
+  "summary": "Retrieve one known record by its FileMaker record ID or OData key.",
+  "purpose": "Use this when you already know the record you want and need a single-record example.",
+  "difficulty": "beginner",
+  "learningGoals": [
+    "Understand the difference between a FileMaker record ID and an OData key.",
+    "Practice a minimal read-only request with one required identifier.",
+    "See the same safe browser pattern used for a direct record fetch."
+  ],
+  "explanation": "This module is a simple single-record read. It keeps the generated request small and highlights that the same record identifier can mean different things depending on the transport.",
+  "commonMistakes": [
+    "Using a display value instead of the real record ID or primary key.",
+    "Forgetting that OData keys belong to tables, not layouts.",
+    "Trying to embed credentials in browser code."
+  ],
+  "expectedResult": "You get starter code that fetches one record through the selected transport without mutating data.",
+  "safety": {
+    "level": "read-only",
+    "sideEffects": false,
+    "runMode": "read-only-live"
+  },
+  "support": {
+    "languages": ["php", "javascript"],
+    "transports": ["data-api", "odata"],
+    "prerequisites": [
+      "Know the record ID or table key you want to fetch.",
+      "Use the protected same-origin PHP bridge for browser testing."
+    ]
+  },
+  "inputs": [
+    {
+      "id": "resource",
+      "label": "Layout or table",
+      "help": "Needed for OData and helpful context for Data API users.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Customers",
+      "sample": "Customers"
+    },
+    {
+      "id": "recordId",
+      "label": "Record ID or key",
+      "help": "For Data API this is usually the FileMaker record ID. For OData it is the table key or ROWID.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "1",
+      "sample": "1"
+    }
+  ],
+  "variants": {
+    "php:data-api": {
+      "status": "supported",
+      "template": "// Data API: get one FileMaker record\n$result = $bridge->getRecord('{{php:recordId}}');"
+    },
+    "php:odata": {
+      "status": "supported",
+      "template": "// OData: get one entity by key\n$result = $bridge->getODataRecord('{{php:recordId}}', [\n    'table' => '{{php:resource}}',\n]);"
+    },
+    "javascript:data-api": {
+      "status": "supported",
+      "template": "// Browser-safe read: ask the protected PHP bridge for one Data API record.\nconst response = await fetch('/openbridge-api.php', {\n  method: 'POST',\n  credentials: 'include',\n  headers: {\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    action: 'playground',\n    transport: 'data-api',\n    operation: 'get',\n    resource: {{js:resource}},\n    recordId: {{js:recordId}},\n  }),\n});\n\nconst result = await response.json();"
+    },
+    "javascript:odata": {
+      "status": "supported",
+      "template": "// Browser-safe read: ask the protected PHP bridge for one OData record.\nconst response = await fetch('/openbridge-api.php', {\n  method: 'POST',\n  credentials: 'include',\n  headers: {\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    action: 'playground',\n    transport: 'odata',\n    operation: 'get',\n    resource: {{js:resource}},\n    table: {{js:resource}},\n    recordId: {{js:recordId}},\n  }),\n});\n\nconst result = await response.json();"
+    }
+  },
+  "comments": {
+    "beginner": [
+      "Get one record is a safe read-only request when you already know the record you want.",
+      "The browser still calls the same-origin PHP bridge so credentials stay server-side.",
+      "OData keys can differ from FileMaker record IDs, so confirm which identifier you have."
+    ],
+    "advanced": [
+      "This module intentionally keeps the payload minimal so fixture assertions stay stable.",
+      "Resource is retained as metadata even when the Data API PHP call does not reference it directly.",
+      "The PHP templates match the original playground output exactly after substitution."
+    ]
+  },
+  "tests": {
+    "fixtureId": "playground.get.v1",
+    "expectedPlaceholders": [
+      "{{php:recordId}}",
+      "{{php:resource}}",
+      "{{js:resource}}",
+      "{{js:recordId}}"
+    ],
+    "safeOperation": "get"
+  },
+  "links": [
+    "OPENBRIDGE-AI-GUIDE.md",
+    "docs/api-reference.md",
+    "docs/quick-start.md"
+  ],
+  "compatibilityAliases": ["get-one-record", "get-record"]
+}

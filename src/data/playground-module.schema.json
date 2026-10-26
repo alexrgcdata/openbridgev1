@@ -1,0 +1,333 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./playground-module.schema.json",
+  "title": "OpenBridge Playground Module",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "status",
+    "category",
+    "order",
+    "tags",
+    "method",
+    "beginnerName",
+    "developerName",
+    "summary",
+    "purpose",
+    "difficulty",
+    "learningGoals",
+    "explanation",
+    "commonMistakes",
+    "expectedResult",
+    "safety",
+    "support",
+    "inputs",
+    "variants",
+    "comments",
+    "tests",
+    "links"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Stable lowercase kebab-case module id."
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Bump only when the module contract changes."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "draft", "archived"]
+    },
+    "category": {
+      "type": "string",
+      "enum": ["read", "find", "write", "scripts", "globals", "setup", "debugging"]
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "method": {
+      "type": "string",
+      "enum": ["GET", "POST", "PATCH", "DELETE"]
+    },
+    "beginnerName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "developerName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    "learningGoals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "explanation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commonMistakes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "expectedResult": {
+      "type": "string",
+      "minLength": 1
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "sideEffects", "runMode"],
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["read-only", "side-effect", "restricted"]
+        },
+        "sideEffects": {
+          "type": "boolean"
+        },
+        "runMode": {
+          "type": "string",
+          "enum": ["read-only-live", "code-only", "disabled"]
+        },
+        "confirmationText": {
+          "type": "string"
+        }
+      }
+    },
+    "support": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["languages", "transports", "prerequisites"],
+      "properties": {
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["php", "javascript"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "transports": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["data-api", "odata"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/input"
+      }
+    },
+    "variants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "php:data-api",
+        "php:odata",
+        "javascript:data-api",
+        "javascript:odata"
+      ],
+      "properties": {
+        "php:data-api": {
+          "$ref": "#/$defs/variant"
+        },
+        "php:odata": {
+          "$ref": "#/$defs/variant"
+        },
+        "javascript:data-api": {
+          "$ref": "#/$defs/variant"
+        },
+        "javascript:odata": {
+          "$ref": "#/$defs/variant"
+        }
+      }
+    },
+    "comments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["beginner", "advanced"],
+      "properties": {
+        "beginner": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "advanced": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixtureId", "expectedPlaceholders"],
+      "properties": {
+        "fixtureId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedPlaceholders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "safeOperation": {
+          "type": "string",
+          "enum": ["list", "find", "get"]
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "compatibilityAliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "help", "type", "required", "defaultValue", "sample"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "help": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": ["text", "integer", "boolean", "json"]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "defaultValue": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "number" },
+            { "type": "boolean" }
+          ]
+        },
+        "sample": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "number" },
+            { "type": "boolean" }
+          ]
+        },
+        "validation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "pattern": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "variant": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "template"],
+          "properties": {
+            "status": {
+              "const": "supported"
+            },
+            "template": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reason"],
+          "properties": {
+            "status": {
+              "const": "unsupported"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "example": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+}

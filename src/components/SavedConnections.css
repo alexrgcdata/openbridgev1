@@ -1,0 +1,10 @@
+.saved-connections .connector-next-step {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.saved-connections .connector-next-step .button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}

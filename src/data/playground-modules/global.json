@@ -1,0 +1,104 @@
+{
+  "id": "global",
+  "version": 1,
+  "status": "active",
+  "category": "globals",
+  "order": 80,
+  "tags": ["globals", "state", "server-side", "review-required"],
+  "method": "PATCH",
+  "beginnerName": "Set a global field",
+  "developerName": "Set FileMaker global field",
+  "summary": "Set a FileMaker global field before another operation or script.",
+  "purpose": "Use this when you need a reviewed code sample for FileMaker global state and want a clear warning that it is not a read-only action.",
+  "difficulty": "advanced",
+  "learningGoals": [
+    "Understand that FileMaker globals change state even though they may look small and harmless.",
+    "Preserve exact FileMaker field names when setting global values.",
+    "Make the Data API dependency explicit for this operation."
+  ],
+  "explanation": "Global field changes are stateful and can influence later requests or scripts, so this module remains code-only. It teaches the payload shape without implying that globals are safe to run from a browser sandbox.",
+  "commonMistakes": [
+    "Treating a global field like a harmless local setting.",
+    "Changing the field name into a friendly label.",
+    "Expecting OData to offer the same helper path for globals."
+  ],
+  "expectedResult": "You get a reviewed starter snippet for setting a FileMaker global field, but the playground will not run it live.",
+  "safety": {
+    "level": "side-effect",
+    "sideEffects": true,
+    "runMode": "code-only",
+    "confirmationText": "Global field changes affect later behavior. Review the field name, value, and environment before running this code."
+  },
+  "support": {
+    "languages": ["php"],
+    "transports": ["data-api"],
+    "prerequisites": [
+      "Know how the target global field affects your FileMaker workflows.",
+      "Use reviewable demo values while learning the pattern."
+    ]
+  },
+  "inputs": [
+    {
+      "id": "field",
+      "label": "Global field name",
+      "help": "Use the exact FileMaker global field name, including any table occurrence prefix if your project requires it.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Globals::StatusFilter",
+      "sample": "Globals::StatusFilter"
+    },
+    {
+      "id": "value",
+      "label": "Global value",
+      "help": "Use the value that should be written into the global field.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Active",
+      "sample": "Active"
+    }
+  ],
+  "variants": {
+    "php:data-api": {
+      "status": "supported",
+      "template": "// Data API: set a FileMaker global field\n$result = $bridge->setGlobalField([\n    '{{php:field}}' => '{{php:value}}',\n]);"
+    },
+    "php:odata": {
+      "status": "unsupported",
+      "reason": "Global-field helpers are Data API-specific in this module version.",
+      "example": "// Global fields are a Data API operation.\n// Switch to Data API to generate this helper."
+    },
+    "javascript:data-api": {
+      "status": "unsupported",
+      "reason": "Browser playground testing is intentionally read-only. Global field changes must stay in reviewed server-side code."
+    },
+    "javascript:odata": {
+      "status": "unsupported",
+      "reason": "Global fields are not an OData playground action. Switch to the PHP Data API variant for a reviewed server-side example."
+    }
+  },
+  "comments": {
+    "beginner": [
+      "Global fields change FileMaker state, so this module only generates code for review.",
+      "Keep the real global field name exactly as FileMaker expects it.",
+      "Switch to the PHP Data API variant if you need the executable starter pattern."
+    ],
+    "advanced": [
+      "The OData PHP branch intentionally stays comment-only to match the legacy generator and avoid false feature parity.",
+      "Global writes are side-effecting even when the payload is tiny.",
+      "No JavaScript variant is supported because the browser learning panel stays read-only."
+    ]
+  },
+  "tests": {
+    "fixtureId": "playground.global.v1",
+    "expectedPlaceholders": [
+      "{{php:field}}",
+      "{{php:value}}"
+    ]
+  },
+  "links": [
+    "OPENBRIDGE-AI-GUIDE.md",
+    "docs/api-reference.md",
+    "docs/security.md"
+  ],
+  "compatibilityAliases": ["set-global", "global-field"]
+}

@@ -1,0 +1,35 @@
+name: Validate OpenBridge
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBRIDGE_PHP_BIN: php
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - uses: pnpm/action-setup@v4
+      - name: Install PHP extensions
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes php-cli php-curl php-sqlite3
+      - name: Install JavaScript dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint, typecheck, test and build
+        run: pnpm validate:phase2

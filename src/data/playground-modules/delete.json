@@ -1,0 +1,103 @@
+{
+  "id": "delete",
+  "version": 1,
+  "status": "active",
+  "category": "write",
+  "order": 60,
+  "tags": ["write", "delete", "mutation", "destructive"],
+  "method": "DELETE",
+  "beginnerName": "Delete a record",
+  "developerName": "Delete record",
+  "summary": "Delete a known record. This helper only generates code; it never auto-runs.",
+  "purpose": "Use this when you need a reviewed server-side starter for a delete flow and want the warning documented with the code.",
+  "difficulty": "advanced",
+  "learningGoals": [
+    "Treat destructive requests with stronger caution than ordinary writes.",
+    "See the current legacy delete output preserved exactly for PHP generation.",
+    "Keep delete logic off the browser testing surface."
+  ],
+  "explanation": "Delete is the most destructive beginner-facing module, so it remains code-only and heavily documented. The generated code is a review aid, not a runnable in-browser shortcut.",
+  "commonMistakes": [
+    "Deleting a production record while trying to learn the API shape.",
+    "Assuming an OData delete should be exposed directly from a browser helper.",
+    "Skipping record verification before running destructive code."
+  ],
+  "expectedResult": "You get a server-side starter snippet with clear warnings, but the playground will not run it live.",
+  "safety": {
+    "level": "restricted",
+    "sideEffects": true,
+    "runMode": "code-only",
+    "confirmationText": "Delete is destructive. Verify the record and environment before running any generated code."
+  },
+  "support": {
+    "languages": ["php"],
+    "transports": ["data-api", "odata"],
+    "prerequisites": [
+      "Use a disposable test environment before running any delete flow.",
+      "Confirm the record identifier with the schema owner or test data owner."
+    ]
+  },
+  "inputs": [
+    {
+      "id": "resource",
+      "label": "Layout or table",
+      "help": "Useful review context for the generated code, especially on the OData side.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "Customers",
+      "sample": "Customers"
+    },
+    {
+      "id": "recordId",
+      "label": "Record ID or key",
+      "help": "Use the exact FileMaker record ID or the OData key you intend to remove.",
+      "type": "text",
+      "required": true,
+      "defaultValue": "1",
+      "sample": "1"
+    }
+  ],
+  "variants": {
+    "php:data-api": {
+      "status": "supported",
+      "template": "// Data API: permanently delete record {{php:recordId}}\n// Confirm the record ID before running this operation.\n$result = $bridge->deleteRecord('{{php:recordId}}');"
+    },
+    "php:odata": {
+      "status": "supported",
+      "template": "// OData: permanently delete entity {{php:recordId}} from {{php:resource}}\n// Send DELETE through your protected OData route after confirmation."
+    },
+    "javascript:data-api": {
+      "status": "unsupported",
+      "reason": "Browser playground testing is intentionally read-only. Delete operations must stay in reviewed server-side code."
+    },
+    "javascript:odata": {
+      "status": "unsupported",
+      "reason": "Browser playground testing is intentionally read-only. Delete operations must stay in a protected server-side route."
+    }
+  },
+  "comments": {
+    "beginner": [
+      "Delete removes data, so this module only generates code and warnings for review.",
+      "Confirm the record ID or key before you run anything.",
+      "Keep destructive logic away from the browser learning surface."
+    ],
+    "advanced": [
+      "The OData PHP variant intentionally preserves the previous comment-only generator output.",
+      "Restricted safety lets the registry and future UI surface stronger warnings than ordinary writes.",
+      "This module should never be part of read-only live testing."
+    ]
+  },
+  "tests": {
+    "fixtureId": "playground.delete.v1",
+    "expectedPlaceholders": [
+      "{{php:resource}}",
+      "{{php:recordId}}"
+    ]
+  },
+  "links": [
+    "OPENBRIDGE-AI-GUIDE.md",
+    "docs/api-reference.md",
+    "docs/security.md"
+  ],
+  "compatibilityAliases": ["delete-record", "remove-record"]
+}
